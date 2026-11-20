@@ -17,7 +17,10 @@ Route::middleware('auth')->group(function () {
     Route::post('generations/quote', QuoteController::class)->name('generations.quote');
 
     Route::get('credits', [CreditController::class, 'index'])->name('credits.index');
-    Route::post('credits', [CreditController::class, 'store'])->name('credits.store');
+    // Demo checkout: no payment is taken, so at least keep it from being scripted.
+    Route::post('credits', [CreditController::class, 'store'])
+        ->middleware('throttle:10,1')
+        ->name('credits.store');
 
     Route::get('admin/report', ReportController::class)
         ->middleware(EnsureUserIsAdmin::class)
