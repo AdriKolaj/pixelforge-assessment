@@ -44,7 +44,7 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function pricingFixture(): array
 {
-    // ..
+    return json_decode(file_get_contents(__DIR__.'/Fixtures/pricing.json'), true);
 }
