@@ -16,6 +16,7 @@ import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import { getInitials } from '@/composables/useInitials';
 import { formatUsd } from '@/lib/money';
 import { dashboard } from '@/routes';
+import { report } from '@/routes/admin';
 import { index as credits } from '@/routes/credits';
 import type { NavItem } from '@/types';
 
@@ -28,6 +29,7 @@ const { resolvedAppearance, updateAppearance } = useAppearance();
 const navItems = computed<NavItem[]>(() => [
     { title: 'Studio', href: dashboard() },
     { title: 'Credits', href: credits() },
+    ...(user.value.is_admin ? [{ title: 'Report', href: report() }] : []),
 ]);
 
 function toggleTheme(): void {
