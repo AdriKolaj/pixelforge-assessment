@@ -55,20 +55,4 @@ final readonly class PricingTable
         return $this->reasoningTokens[$quality]
             ?? throw new InvalidArgumentException("No reasoning range for {$quality}.");
     }
-
-    /**
-     * @return list<string>
-     */
-    public function qualities(): array
-    {
-        return array_keys($this->outputTokens);
-    }
-
-    /**
-     * @return list<string>
-     */
-    public function sizes(): array
-    {
-        return array_keys(reset($this->outputTokens) ?: []);
-    }
 }

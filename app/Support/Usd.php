@@ -29,6 +29,9 @@ final class Usd
         return (string) BigDecimal::ofUnscaledValue($nano, 9);
     }
 
+    /**
+     * @param  int<0, 9>  $decimals
+     */
     public static function format(int $nano, int $decimals = 2): string
     {
         $amount = BigDecimal::ofUnscaledValue($nano, 9)->toScale($decimals, RoundingMode::HalfUp);

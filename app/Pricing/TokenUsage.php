@@ -2,6 +2,8 @@
 
 namespace App\Pricing;
 
+use UnexpectedValueException;
+
 final readonly class TokenUsage
 {
     public function __construct(
@@ -12,15 +14,21 @@ final readonly class TokenUsage
     ) {}
 
     /**
-     * @param  array{input_text_tokens: int, input_image_tokens: int, output_tokens: int, reasoning_tokens: int}  $usage
+     * @param  array<string, mixed>  $usage
      */
     public static function fromApi(array $usage): self
     {
+        foreach (['input_text_tokens', 'input_image_tokens', 'output_tokens', 'reasoning_tokens'] as $key) {
+            if (! is_int($usage[$key] ?? null) || $usage[$key] < 0) {
+                throw new UnexpectedValueException("Missing or invalid usage [{$key}].");
+            }
+        }
+
         return new self(
-            (int) $usage['input_text_tokens'],
-            (int) $usage['input_image_tokens'],
-            (int) $usage['output_tokens'],
-            (int) $usage['reasoning_tokens'],
+            $usage['input_text_tokens'],
+            $usage['input_image_tokens'],
+            $usage['output_tokens'],
+            $usage['reasoning_tokens'],
         );
     }
 
